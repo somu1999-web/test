@@ -22,9 +22,10 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
     private ModelMapper modelMapper;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, ModelMapper modelMapper) {
         this.employeeRepository = employeeRepository;
 
+        this.modelMapper = modelMapper;
     }
 
     public EmployeeDto addEmployee(EmployeeDto dto){
@@ -35,6 +36,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(long id){
+
         employeeRepository.deleteById(id);
     }
 
@@ -52,9 +54,9 @@ public class EmployeeService {
         Pageable page = PageRequest.of(pageSize , pageNo , sort);
         Page<Employee> all = employeeRepository.findAll(page);
         List<Employee> employees = all.getContent();
-        List<EmployeeDto> dto =
+        List<EmployeeDto> dtos =
                 employees.stream().map(e->mapToDto(e)).collect(Collectors.toList());
-        return dto;
+        return dtos;
     }
 
     EmployeeDto mapToDto(Employee employee){

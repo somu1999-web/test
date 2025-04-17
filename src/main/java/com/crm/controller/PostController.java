@@ -27,6 +27,7 @@ public class PostController {
 //    http://localhost:8080/api/v1/posts?id=2
     @DeleteMapping
     public void deletePost(){
+
         postRepository.deleteById(1L);
     }
 }
